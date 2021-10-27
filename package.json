@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/DDeShon/crypto-tracking-api/issues"
   },
-  "homepage": "https://github.com/DDeShon/crypto-tracking-api#readme"
+  "homepage": "https://github.com/DDeShon/crypto-tracking-api#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10"
+  }
 }
