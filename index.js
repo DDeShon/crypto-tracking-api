@@ -5,4 +5,8 @@ const cheerio = require("cheerio");
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.json("Welcome to my crypto tracking API");
+});
+
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
