@@ -5,35 +5,39 @@ const cheerio = require("cheerio");
 
 const app = express();
 
-const sources = [
+const newsSources = [
   {
     name: "cryptonews",
-    address: "https://cryptonews.com/",
+    address: "https://cryptonews.com",
+    base: "",
   },
   {
     name: "cryptocurrencynews",
-    address: "https://cryptocurrencynews.com/",
+    address: "https://cryptonews.net",
+    base: "",
   },
   {
     name: "coindesk",
-    address: "https://www.coindesk.com/",
+    address: "https://www.coindesk.com",
+    base: "",
   },
 ];
 
 const articles = [];
 
-sources.forEach((source) => {
-  axios.get(source.address).then((response) => {
+newsSources.forEach((newsSource) => {
+  axios.get(newsSource.address).then((response) => {
     const html = response.data;
     // console.log(html);
     const data = cheerio.load(html);
 
-    data("a.article__title", html).each(function () {
+    data("a.title", html).each(function () {
       const title = data(this).text();
       const url = data(this).attr("href");
       articles.push({
         title,
-        url,
+        url: newsSource.address + url,
+        source: newsSource.name,
       });
     });
   });
