@@ -27,6 +27,15 @@ sources.forEach((source) => {
     const html = response.data;
     // console.log(html);
     const data = cheerio.load(html);
+
+    data("a.article__title", html).each(function () {
+      const title = data(this).text();
+      const url = data(this).attr("href");
+      articles.push({
+        title,
+        url,
+      });
+    });
   });
 });
 
@@ -35,23 +44,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/news", (req, res) => {
-  axios
-    .get("https://coinmarketcap.com/")
-    .then((response) => {
-      const html = response.data;
-      const data = cheerio.load(html);
-
-      data("a.article__title", html).each(function () {
-        const title = data(this).text();
-        const url = data(this).attr("href");
-        articles.push({
-          title,
-          href,
-        });
-      });
-      res.json(articles);
-    })
-    .catch((err) => console.log(err));
+  res.json(articles);
 });
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
