@@ -17,8 +17,13 @@ const newsSources = [
     base: "",
   },
   {
-    name: "coindesk",
+    name: "coindesk.com",
     address: "https://www.coindesk.com",
+    base: "",
+  },
+  {
+    name: "coinmarketcap.com",
+    address: "https://coinmarketcap.com/headlines/news/",
     base: "",
   },
 ];
