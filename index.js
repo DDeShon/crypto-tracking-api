@@ -28,7 +28,6 @@ const articles = [];
 newsSources.forEach((newsSource) => {
   axios.get(newsSource.address).then((response) => {
     const html = response.data;
-    // console.log(html);
     const data = cheerio.load(html);
 
     data("a.title", html).each(function () {
