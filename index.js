@@ -73,13 +73,54 @@ app.get("/news", (req, res) => {
 app.get("/news/:newsSourceId", async (req, res) => {
   const newsSourceId = req.params.newsSourceId;
 
-  const newsSource = newsSources.filter(
+  const newsSourceAddress = newsSources.filter(
     (newsSource) => newsSource.name == newsSourceId
   )[0].address;
+  const newsSourceBase = newsSources.filter(
+    (newsSource) => newsSource.name == newsSourceId
+  )[0].base;
 
-  console.log(newsSource);
+  console.log(newsSourceAddress);
 
-  // axios.get();
+  axios
+    .get(newsSourceAddress)
+    .then((response) => {
+      const html = response.data;
+      const data = cheerio.load(html);
+      const articles = [];
+
+      data("a.title", html).each(function () {
+        const title = data(this).text();
+        const url = data(this).attr("href");
+        articles.push({
+          title,
+          url: newsSourceBase + url,
+          source: newsSourceId,
+        });
+      });
+
+      data("a.article__title", html).each(function () {
+        const title = data(this).text();
+        const url = data(this).attr("href");
+        articles.push({
+          title,
+          url: newsSourceBase + url,
+          source: newsSourceId,
+        });
+      });
+
+      data("a.headline", html).each(function () {
+        const title = data(this).text();
+        const url = data(this).attr("href");
+        articles.push({
+          title,
+          url: newsSourceBase + url,
+          source: newsSourceId,
+        });
+      });
+      res.json(articles);
+    })
+    .catch((err) => console.log(err));
 });
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
