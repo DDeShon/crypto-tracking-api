@@ -7,23 +7,18 @@ const app = express();
 
 const newsSources = [
   {
-    name: "www.cryptonews.com",
-    address: "https://cryptonews.com",
+    name: "cryptonews.com",
+    address: "https://www.cryptonews.com",
     base: "",
   },
   {
-    name: "www.cryptonews.net",
-    address: "https://cryptonews.net",
+    name: "cryptonews.net",
+    address: "https://www.cryptonews.net",
     base: "",
   },
   {
-    name: "www.coindesk.com",
+    name: "coindesk.com",
     address: "https://www.coindesk.com",
-    base: "",
-  },
-  {
-    name: "www.dailyhodl.com",
-    address: "https://dailyhodl.com/",
     base: "",
   },
 ];
@@ -64,16 +59,6 @@ newsSources.forEach((newsSource) => {
         source: newsSource.name,
       });
     });
-
-    data("h3.jeg_post_title", html).each(function () {
-      const title = data(this).text();
-      const url = data(this).attr("href");
-      articles.push({
-        title,
-        url: newsSource.address + url,
-        source: newsSource.name,
-      });
-    });
   });
 });
 
@@ -83,6 +68,18 @@ app.get("/", (req, res) => {
 
 app.get("/news", (req, res) => {
   res.json(articles);
+});
+
+app.get("/news/:newsSourceId", async (req, res) => {
+  const newsSourceId = req.params.newsSourceId;
+
+  const newsSource = newsSources.filter(
+    (newsSource) => newsSource.name == newsSourceId
+  )[0].address;
+
+  console.log(newsSource);
+
+  // axios.get();
 });
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
