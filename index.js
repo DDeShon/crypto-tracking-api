@@ -40,6 +40,16 @@ newsSources.forEach((newsSource) => {
         source: newsSource.name,
       });
     });
+
+    data("a.article__title", html).each(function () {
+      const title = data(this).text();
+      const url = data(this).attr("href");
+      articles.push({
+        title,
+        url: newsSource.address + url,
+        source: newsSource.name,
+      });
+    });
   });
 });
 
