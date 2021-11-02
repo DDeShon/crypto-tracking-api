@@ -8,12 +8,12 @@ const app = express();
 const newsSources = [
   {
     name: "cryptonews.com",
-    address: "https://www.cryptonews.com",
+    address: "https://cryptonews.com/",
     base: "",
   },
   {
     name: "cryptonews.net",
-    address: "https://www.cryptonews.net",
+    address: "https://cryptonews.net/",
     base: "",
   },
   {
