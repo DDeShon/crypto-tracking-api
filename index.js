@@ -7,22 +7,22 @@ const app = express();
 
 const newsSources = [
   {
-    name: "cryptonews.com",
+    name: "www.cryptonews.com",
     address: "https://cryptonews.com",
     base: "",
   },
   {
-    name: "cryptonews.net",
+    name: "www.cryptonews.net",
     address: "https://cryptonews.net",
     base: "",
   },
   {
-    name: "coindesk.com",
+    name: "www.coindesk.com",
     address: "https://www.coindesk.com",
     base: "",
   },
   {
-    name: "coinmarketcap.com",
+    name: "www.coinmarketcap.com",
     address: "https://coinmarketcap.com/headlines/news/",
     base: "",
   },
@@ -46,6 +46,16 @@ newsSources.forEach((newsSource) => {
     });
 
     data("a.article__title", html).each(function () {
+      const title = data(this).text();
+      const url = data(this).attr("href");
+      articles.push({
+        title,
+        url: newsSource.address + url,
+        source: newsSource.name,
+      });
+    });
+
+    data("a.headline", html).each(function () {
       const title = data(this).text();
       const url = data(this).attr("href");
       articles.push({
