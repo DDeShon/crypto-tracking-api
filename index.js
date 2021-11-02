@@ -8,12 +8,12 @@ const app = express();
 const newsSources = [
   {
     name: "cryptonews.com",
-    address: "https://cryptonews.com/",
+    address: "https://cryptonews.com",
     base: "",
   },
   {
     name: "cryptonews.net",
-    address: "https://cryptonews.net/",
+    address: "https://cryptonews.net",
     base: "",
   },
   {
@@ -82,45 +82,42 @@ app.get("/news/:newsSourceId", async (req, res) => {
 
   console.log(newsSourceAddress);
 
-  axios
-    .get(newsSourceAddress)
-    .then((response) => {
-      const html = response.data;
-      const data = cheerio.load(html);
-      const articles = [];
+  axios.get(newsSourceAddress).then((response) => {
+    const html = response.data;
+    const data = cheerio.load(html);
+    const specificArticles = [];
 
-      data("a.title", html).each(function () {
-        const title = data(this).text();
-        const url = data(this).attr("href");
-        articles.push({
-          title,
-          url: newsSourceBase + url,
-          source: newsSourceId,
-        });
+    data("a.title", html).each(function () {
+      const title = data(this).text();
+      const url = data(this).attr("href");
+      specificArticles.push({
+        title,
+        url: newsSourceAddress + url,
+        source: newsSourceId,
       });
+    });
 
-      data("a.article__title", html).each(function () {
-        const title = data(this).text();
-        const url = data(this).attr("href");
-        articles.push({
-          title,
-          url: newsSourceBase + url,
-          source: newsSourceId,
-        });
+    data("a.article__title", html).each(function () {
+      const title = data(this).text();
+      const url = data(this).attr("href");
+      specificArticles.push({
+        title,
+        url: newsSourceAddress + url,
+        source: newsSourceId,
       });
+    });
 
-      data("a.headline", html).each(function () {
-        const title = data(this).text();
-        const url = data(this).attr("href");
-        articles.push({
-          title,
-          url: newsSourceBase + url,
-          source: newsSourceId,
-        });
+    data("a.headline", html).each(function () {
+      const title = data(this).text();
+      const url = data(this).attr("href");
+      specificArticles.push({
+        title,
+        url: newsSourceAddress + url,
+        source: newsSourceId,
       });
-      res.json(articles);
-    })
-    .catch((err) => console.log(err));
+    });
+    res.json(specificArticles);
+  });
 });
 
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
