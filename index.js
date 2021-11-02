@@ -22,8 +22,8 @@ const newsSources = [
     base: "",
   },
   {
-    name: "www.coinmarketcap.com",
-    address: "https://coinmarketcap.com/headlines/news/",
+    name: "www.dailyhodl.com",
+    address: "https://dailyhodl.com/",
     base: "",
   },
 ];
@@ -56,6 +56,16 @@ newsSources.forEach((newsSource) => {
     });
 
     data("a.headline", html).each(function () {
+      const title = data(this).text();
+      const url = data(this).attr("href");
+      articles.push({
+        title,
+        url: newsSource.address + url,
+        source: newsSource.name,
+      });
+    });
+
+    data("h3.jeg_post_title", html).each(function () {
       const title = data(this).text();
       const url = data(this).attr("href");
       articles.push({
