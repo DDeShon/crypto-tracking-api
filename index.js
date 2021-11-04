@@ -80,8 +80,6 @@ app.get("/news/:newsSourceId", async (req, res) => {
     (newsSource) => newsSource.name == newsSourceId
   )[0].base;
 
-  console.log(newsSourceAddress);
-
   axios.get(newsSourceAddress).then((response) => {
     const html = response.data;
     const data = cheerio.load(html);
