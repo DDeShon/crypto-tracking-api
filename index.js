@@ -70,7 +70,7 @@ app.get("/news", (req, res) => {
   res.json(articles);
 });
 
-app.get("/news/:newsSourceId", async (req, res) => {
+app.get("/news/:newsSourceId", (req, res) => {
   const newsSourceId = req.params.newsSourceId;
 
   const newsSourceAddress = newsSources.filter(
