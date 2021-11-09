@@ -78,7 +78,9 @@ newsSources.forEach((newsSource) => {
 });
 
 app.get("/", (req, res) => {
-  res.json("Welcome to my crypto news tracking API");
+  res.json(
+    "Welcome to my crypto news tracking API. To view the top headlines from multiple news sources, add '/news' to the URL. To view headlines from one of the following sources, add that source to the URL. Sources: cryptonews.com, cryptonews.net, coindesk.com, cryptopolitan.com."
+  );
 });
 
 app.get("/news", (req, res) => {
