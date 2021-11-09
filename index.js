@@ -21,6 +21,11 @@ const newsSources = [
     address: "https://www.coindesk.com",
     base: "",
   },
+  {
+    name: "cryptopolitan.com",
+    address: "https://www.cryptopolitan.com/",
+    base: "",
+  },
 ];
 
 const articles = [];
@@ -51,6 +56,16 @@ newsSources.forEach((newsSource) => {
     });
 
     data("a.headline", html).each(function () {
+      const title = data(this).text();
+      const url = data(this).attr("href");
+      articles.push({
+        title,
+        url: newsSource.address + url,
+        source: newsSource.name,
+      });
+    });
+
+    data("h3.jeg_post_title", html).each(function () {
       const title = data(this).text();
       const url = data(this).attr("href");
       articles.push({
@@ -106,6 +121,16 @@ app.get("/news/:newsSourceId", (req, res) => {
     });
 
     data("a.headline", html).each(function () {
+      const title = data(this).text();
+      const url = data(this).attr("href");
+      specificArticles.push({
+        title,
+        url: newsSourceAddress + url,
+        source: newsSourceId,
+      });
+    });
+
+    data("a.jeg_post_title", html).each(function () {
       const title = data(this).text();
       const url = data(this).attr("href");
       specificArticles.push({
